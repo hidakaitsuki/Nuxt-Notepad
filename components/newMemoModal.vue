@@ -58,13 +58,15 @@ export default defineComponent({
     const title = ref("");
     const contents = ref("");
     const store = useStore();
+    const user = store.getters.getLoginUser;
+
+    //  モーダルを閉じる（親のmodalFlagをfalseにさせる）
     const childFalseModal = () => {
       // 親に"childFalseModal"としてメソッドを渡す
       context.emit("childFalseModal");
     };
     // メモを新規作成する
     const createMemo = async () => {
-      const user = store.getters.getLoginUser;
       const date = new Date();
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/memo",
@@ -75,11 +77,10 @@ export default defineComponent({
           user: user,
         }
       );
-      // モーダルを閉じる
+      // モーダルを閉じる（親のmodalFlagをfalseにさせる）
       context.emit("childFalseModal");
     };
-
-
+ 
     return { title, contents, childFalseModal, createMemo };
   },
 });

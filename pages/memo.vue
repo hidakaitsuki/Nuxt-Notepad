@@ -29,21 +29,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useStore } from "@nuxtjs/composition-api";
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useStore,
+} from "@nuxtjs/composition-api";
 import newMemoModal from "~/components/newMemoModal.vue";
 
 export default defineComponent({
   components: { newMemoModal },
   setup() {
     const store = useStore();
+    const { $axios } = useContext();
     const modalFlag = ref(false);
+    // モーダルを開く
     const openModal = () => {
       modalFlag.value = true;
     };
+    // モーダルを閉じる
     const falseModal = () => {
       modalFlag.value = false;
     };
-
+    // 現在ログインしているユーザー情報を取得
+    const user = store.getters.getLoginUser;
+    // ログインしているユーザーIDからメモをとってくる
+    const getMemo = async () => {
+      const res = await $axios.get(
+        `https://api-rks-generator.herokuapp.com/memo/memo/${user.id}`
+      );
+      console.log(res.data);
+    };
+    getMemo();
     return { modalFlag, openModal, falseModal };
   },
 });
