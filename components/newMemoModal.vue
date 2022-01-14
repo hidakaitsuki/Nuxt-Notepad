@@ -79,8 +79,10 @@ export default defineComponent({
       );
       // モーダルを閉じる（親のmodalFlagをfalseにさせる）
       context.emit("childFalseModal");
+      // 新規作成時にメモ一覧をを再取得
+      context.emit("childGetMemo");
     };
- 
+
     return { title, contents, childFalseModal, createMemo };
   },
 });
