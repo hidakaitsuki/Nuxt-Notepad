@@ -10,18 +10,24 @@
       >
         <div class="mb-8">
           <p>タイトル</p>
-          <input type="text " size="100" class="border-2" />
+          <input type="text " size="100" class="border-2" v-model="title" />
         </div>
 
         <div>
           <p>内容</p>
-          <textarea type="text" class="border-2" rows="20" cols="100"/>
+          <textarea
+            type="text"
+            class="border-2"
+            rows="20"
+            cols="100"
+            v-model="contents"
+          />
         </div>
         <div class="flex justify-center">
           <button
-            class=" mr-2 flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-teal-dark"
+            class="mr-2 flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-teal-dark"
             type="button"
-
+            @click="createMemo()"
           >
             新規作成
           </button>
@@ -39,15 +45,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useStore,
+} from "@nuxtjs/composition-api";
 
 export default defineComponent({
   setup(props, context) {
+    const { $axios } = useContext();
+    const title = ref("");
+    const contents = ref("");
+    const store = useStore();
     const childFalseModal = () => {
       // 親に"childFalseModal"としてメソッドを渡す
       context.emit("childFalseModal");
     };
-    return { childFalseModal };
+    // メモを新規作成する
+    const createMemo = async () => {
+      const user = store.getters.getLoginUser;
+      const date = new Date();
+      const res = await $axios.post(
+        "https://api-rks-generator.herokuapp.com/memo/memo",
+        {
+          title: title.value,
+          contents: contents.value,
+          date: date,
+          user: user,
+        }
+      );
+      // モーダルを閉じる
+      context.emit("childFalseModal");
+    };
+
+
+    return { title, contents, childFalseModal, createMemo };
   },
 });
 </script>

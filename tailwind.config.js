@@ -14,12 +14,12 @@ module.exports = {
     extend: {
       fontFamily: {
         ui: ["Hannotate TC"],
+        header: ["Snell Roundhand"],
       },
       backgroundImage: (theme) => ({
         registerimg: "url('static/register.jpeg')",
         loginimg: "url('static/photo-1486520299386-6d106b22014b.jpeg')",
         topimg: "url('static/top.jpg')",
-        
       }),
     },
   },

@@ -4,7 +4,7 @@
       <img src="../static/logo.png" class="h-32 ml-2" />
     </div>
     <div class="">
-      <h1 class="font-ui text-8xl absolute right-[50%] top-0">Notepad</h1>
+      <h1 class="font-header text-8xl absolute right-[40%] top-0">Nuxt-Notepad</h1>
     </div>
     <div class="mt-7 left-2 absolute right-1 top-0 text-right">
       <nuxt-link to="/" class="font-ui font-bold pr-3">トップページ</nuxt-link>
