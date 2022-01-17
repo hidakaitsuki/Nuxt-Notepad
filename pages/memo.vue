@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center h-[800px]">
     検索<br /><input
       type="text"
       class="border"
@@ -9,19 +9,39 @@
       <img src="../static/newmemo.png" class="h-10" @click="openModal()" />
     </button>
     <br />
-    <div
-      class="bg-white p-6 shadow-md border-2 rounded-md w-[20%] h-[200px]"
-      v-for="memo of memos"
-      v-bind:key="memo.id"
-    >
-      <h3 class="text-xl text-gray-800 font-semibold mb-3">{{ memo.tite }}</h3>
-      <p class="mb-2">{{ memo.contents }}</p>
-      <p class="my-4">{{ memo.date }}</p>
-      <button
-        class="text-lg font-semibold text-gray-700 bg-indigo-100 px-4 py-1 block mx-auto rounded-md"
-      >
-        Cook This
-      </button>
+    <hr />
+    <div class="relative h-[800px]">
+      <!-- メモ一覧 -->
+      <div class="w-[25%] h-[705px] border-2">
+        <div
+          class="bg-white p-6 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative"
+          v-for="memo of memos"
+          v-bind:key="memo.id"
+          @click="getDetail(memo.id)"
+        >
+          <h3
+            class="absolute top-1 left-2 text-left text-xl text-gray-800 font-semibold w-[80%] overflow-ellipsis overflow-hidden"
+          >
+            {{ memo.title }}
+          </h3>
+          <p
+            class="absolute text-gray-400 top-7 text-left left-4 w-[70%] overflow-ellipsis overflow-hidden"
+          >
+            {{ memo.contents }}
+          </p>
+          <p class="absolute bottom-1 right-1 text-xs text-gray-400">
+            {{ memo.date }}
+          </p>
+        </div>
+      </div>
+      <!-- メモ詳細 -->
+      <div class="absolute w-[75%] h-[800px] top-0 right-0">
+        {{ details.title }}
+        {{ details.contents }}
+
+        <button type="button">登録</button>
+        <button type="button">削除</button>
+      </div>
     </div>
     <!-- childFalseModalを子から受け取って親のfalseModalを発火させる -->
     <new-memo-modal
@@ -76,7 +96,25 @@ export default defineComponent({
       console.log(memos.value);
     };
     getMemo();
-    return { modalFlag, openModal, falseModal, memos, getMemo };
+
+    // メモの一覧を押したときに詳細を表示する
+    let details = ref("");
+    const getDetail = (id: number) => {
+      // 配列の何番目に押したメモのがあるか検索
+      const index = memos.value.findIndex((memo) => memo.id === id);
+      details.value = memos.value[index];
+      console.log(details.value);
+    };
+
+    return {
+      modalFlag,
+      openModal,
+      falseModal,
+      memos,
+      getMemo,
+      getDetail,
+      details,
+    };
   },
 });
 </script>

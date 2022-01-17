@@ -1,5 +1,5 @@
 <template>
-  <div class="h-20 bg-white opacity-8"></div>
+  <div class="h-20 bg-white opacity-8">footer</div>
 </template>
 
 <script>

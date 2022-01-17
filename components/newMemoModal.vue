@@ -51,6 +51,7 @@ import {
   useContext,
   useStore,
 } from "@nuxtjs/composition-api";
+import format from "date-fns/format";
 
 export default defineComponent({
   setup(props, context) {
@@ -67,7 +68,8 @@ export default defineComponent({
     };
     // メモを新規作成する
     const createMemo = async () => {
-      const date = new Date();
+      // 今の日付
+      const date = format(new Date(), "yyyy/MM/dd");
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/memo",
         {
