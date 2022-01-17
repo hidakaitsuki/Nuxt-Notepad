@@ -12,9 +12,9 @@
     <hr />
     <div class="relative h-[800px]">
       <!-- メモ一覧 -->
-      <div class="w-[25%] h-[705px] border-2">
+      <div class="w-[25%] h-[705px] border-r-2">
         <div
-          class="bg-white p-7 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
+          class="bg-white p-7 top-0 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
           v-for="memo of memos"
           v-bind:key="memo.id"
           @click="getDetail(memo.id)"
@@ -101,6 +101,7 @@ export default defineComponent({
     const memos = ref(new Array());
     const router = useRouter();
     const loginFlag = store.getters.getLoginFlag;
+    
 
     // ログインしていなければトップページに飛ばす
     if (loginFlag === false) {

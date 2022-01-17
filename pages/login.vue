@@ -30,7 +30,7 @@
                 v-model="password"
               />
             </div>
-            <div class="flex justify-between">
+            <!-- <div class="flex justify-between">
               <div>
                 <input class="cursor-pointer" type="radio" name="rememberme" />
                 <span class="text-sm">Remember Me</span>
@@ -38,7 +38,7 @@
               <span class="text-sm text-blue-700 hover:underline cursor-pointer"
                 >Forgot password?</span
               >
-            </div>
+            </div> -->
             <div class="">
               <button
                 class="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100"
