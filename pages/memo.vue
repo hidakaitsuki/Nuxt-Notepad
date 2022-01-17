@@ -14,7 +14,7 @@
       <!-- メモ一覧 -->
       <div class="w-[25%] h-[705px] border-2">
         <div
-          class="bg-white p-6 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative"
+          class="bg-white p-6 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
           v-for="memo of memos"
           v-bind:key="memo.id"
           @click="getDetail(memo.id)"
@@ -35,12 +35,28 @@
         </div>
       </div>
       <!-- メモ詳細 -->
-      <div class="absolute w-[75%] h-[800px] top-0 right-0">
-        {{ details.title }}
-        {{ details.contents }}
-
-        <button type="button">登録</button>
-        <button type="button">削除</button>
+      <div
+        class="absolute w-[75%] h-[800px] top-0 right-0 overflow-y-scroll"
+        v-if="detailFlag"
+      >
+        タイトル<br />
+        <input
+          type="text"
+          class="w-[80%] border-2"
+          v-model="details.title"
+        /><br />
+        内容<br />
+        <textarea
+          name=""
+          id=""
+          cols="80"
+          rows="20"
+          class="border-2 w-[80%] resize-none"
+          v-model="details.contents"
+        ></textarea>
+        <br />
+        <button type="button" @click="updateMemo(details.id)">登録</button>
+        <button type="button" @click="deleteMemo(details.id)">削除</button>
       </div>
     </div>
     <!-- childFalseModalを子から受け取って親のfalseModalを発火させる -->
@@ -61,6 +77,7 @@ import {
   useRouter,
   useStore,
 } from "@nuxtjs/composition-api";
+import format from "date-fns/esm/format";
 import newMemoModal from "~/components/newMemoModal.vue";
 
 export default defineComponent({
@@ -99,11 +116,36 @@ export default defineComponent({
 
     // メモの一覧を押したときに詳細を表示する
     let details = ref("");
+    const detailFlag = ref(false);
     const getDetail = (id: number) => {
       // 配列の何番目に押したメモのがあるか検索
       const index = memos.value.findIndex((memo) => memo.id === id);
       details.value = memos.value[index];
       console.log(details.value);
+      detailFlag.value = true;
+    };
+    // 編集する
+    const updateMemo = async (id: number) => {
+      const res = await $axios.post(
+        "https://api-rks-generator.herokuapp.com/memo/memo/update",
+        {
+          id: id,
+          detail: details.value,
+          date: format(new Date(), "yyyy/MM/dd"),
+        }
+      );
+      console.log(res.data);
+    };
+
+    const deleteMemo = async (id: number) => {
+      const res = await $axios.post(
+        "https://api-rks-generator.herokuapp.com/memo/memo/delete",
+        { id: id }
+      );
+      // 消したらdetailを非表示にする
+      detailFlag.value=false
+      // 再度データベースからメモを取って来る
+      getMemo();
     };
 
     return {
@@ -114,6 +156,9 @@ export default defineComponent({
       getMemo,
       getDetail,
       details,
+      detailFlag,
+      updateMemo,
+      deleteMemo,
     };
   },
 });
