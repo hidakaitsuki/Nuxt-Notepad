@@ -14,7 +14,7 @@
       <!-- メモ一覧 -->
       <div class="w-[25%] h-[705px] border-2">
         <div
-          class="bg-white p-6 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
+          class="bg-white p-7 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
           v-for="memo of memos"
           v-bind:key="memo.id"
           @click="getDetail(memo.id)"
@@ -50,13 +50,25 @@
           name=""
           id=""
           cols="80"
-          rows="20"
+          rows="23"
           class="border-2 w-[80%] resize-none"
           v-model="details.contents"
         ></textarea>
         <br />
-        <button type="button" @click="updateMemo(details.id)">登録</button>
-        <button type="button" @click="deleteMemo(details.id)">削除</button>
+        <button
+          type="button"
+          @click="updateMemo(details.id)"
+          class="text-white py-2 px-4 rounded bg-blue-700"
+        >
+          登録
+        </button>
+        <button
+          type="button"
+          @click="deleteMemo(details.id)"
+          class="text-white py-2 px-4 rounded bg-blue-700"
+        >
+          削除
+        </button>
       </div>
     </div>
     <!-- childFalseModalを子から受け取って親のfalseModalを発火させる -->
@@ -116,12 +128,15 @@ export default defineComponent({
 
     // メモの一覧を押したときに詳細を表示する
     let details = ref("");
+    // 初期は何も選択されていないので詳細画面には何も表示しない
     const detailFlag = ref(false);
     const getDetail = (id: number) => {
-      // 配列の何番目に押したメモのがあるか検索
+      // 配列の何番目に押したメモがあるか検索
       const index = memos.value.findIndex((memo) => memo.id === id);
+      // 詳細用の変数に押したメモを代入する
       details.value = memos.value[index];
       console.log(details.value);
+      // 詳細用の画面を表示
       detailFlag.value = true;
     };
     // 編集する
@@ -143,7 +158,7 @@ export default defineComponent({
         { id: id }
       );
       // 消したらdetailを非表示にする
-      detailFlag.value=false
+      detailFlag.value = false;
       // 再度データベースからメモを取って来る
       getMemo();
     };

@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 const createStore = () => {
   return new Vuex.Store({
     state: {
@@ -25,6 +26,19 @@ const createStore = () => {
         return state.loginFlag;
       },
     },
+
+    plugins: [
+      // 更新してもstoreのデータを残す(SSR使用不可)
+      createPersistedState({
+        // ストレージのキーを指定
+        key: "vuex",
+
+        paths: ["loginUser", "loginFlag"],
+
+        // ストレージの種類
+        storage: window.sessionStorage,
+      }),
+    ],
   });
 };
 
