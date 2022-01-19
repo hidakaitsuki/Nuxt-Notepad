@@ -68,11 +68,20 @@
         </button>
         <button
           type="button"
-          @click="deleteMemo(details.id)"
+          @click="openDeleteModal()"
           class="text-white py-2 px-4 rounded bg-blue-700"
         >
           削除
         </button>
+        <!-- 削除するときの確認用モーダル -->
+        <!-- idをpropsに渡す -->
+        <delete-memo-modal
+          :id="details.id"
+          @childFalseModal="falseDeleteModal"
+          @deleted="deleteMemo"
+          v-if="deleteModalFlag"
+          class="left-0 fixed z-10 top-0"
+        ></delete-memo-modal>
       </div>
     </div>
     <div class="bottom-[50%] absolute w-screen font-ui" v-if="noMemoFlag">
@@ -104,10 +113,11 @@ import {
   useStore,
 } from "@nuxtjs/composition-api";
 import format from "date-fns/esm/format";
+import DeleteMemoModal from "~/components/deleteMemoModal.vue";
 import newMemoModal from "~/components/newMemoModal.vue";
 
 export default defineComponent({
-  components: { newMemoModal },
+  components: { newMemoModal, DeleteMemoModal },
   setup() {
     const store = useStore();
     const { $axios } = useContext();
@@ -188,16 +198,28 @@ export default defineComponent({
         }
       );
     };
-    
+
+    // 削除確認モーダルのフラグ
+    const deleteModalFlag = ref(false);
+    /**
+     * 削除確認モーダルを開く.
+     */
+    const openDeleteModal = () => {
+      deleteModalFlag.value = true;
+    };
+    /**
+     * 削除確認モーダルを閉じる
+     */
+    const falseDeleteModal = () => {
+      deleteModalFlag.value = false;
+    };
+
     /**
      * メモを削除する.
+     * @remarks -削除確認モーダルから削除したことを受け取ってから処理する
      * @param id -削除するメモID
      */
     const deleteMemo = async (id: number) => {
-      const res = await $axios.post(
-        "https://api-rks-generator.herokuapp.com/memo/memo/delete",
-        { id: id }
-      );
       // 消したらdetailを非表示にする
       detailFlag.value = false;
       // 再度データベースからメモを取って来る
@@ -236,6 +258,9 @@ export default defineComponent({
       searchWord,
       search,
       noMemoFlag,
+      deleteModalFlag,
+      openDeleteModal,
+      falseDeleteModal,
     };
   },
 });
