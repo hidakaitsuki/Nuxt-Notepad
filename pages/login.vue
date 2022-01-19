@@ -1,61 +1,45 @@
 <template>
-  <div
-    class="bg-no-repeat h-[500px] w-[60%] rounded-lg block mt-[200px] mb-20 mx-auto bg-loginimg"
-  >
-    <div class="flex justify-end mx-auto">
-      <div class="bg-white w-1/2 h-[500px] flex justify-center items-center">
-        <div>
-          <form>
-            <div>
-              <span class="text-sm text-gray-900">Welcome back</span>
-              <h1 class="text-2xl font-bold">Login to your account</h1>
-            </div>
-            <div class="my-3">
-              <label class="block text-md mb-2" for="email">Email</label>
-              <input
-                class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none"
-                type="email"
-                name="password"
-                placeholder="email"
-                v-model="email"
-              />
-            </div>
-            <div class="mt-5">
-              <label class="block text-md mb-2" for="password">Password</label>
-              <input
-                class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none"
-                type="password"
-                name="password"
-                placeholder="password"
-                v-model="password"
-              />
-            </div>
-            <!-- <div class="flex justify-between">
-              <div>
-                <input class="cursor-pointer" type="radio" name="rememberme" />
-                <span class="text-sm">Remember Me</span>
-              </div>
-              <span class="text-sm text-blue-700 hover:underline cursor-pointer"
-                >Forgot password?</span
-              >
-            </div> -->
-            <div class="">
-              <button
-                class="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100"
-                type="button"
-                @click="login()"
-              >
-                Login now
-              </button>
-            </div>
-          </form>
-          <p class="mt-8">
-            Dont have an account?
-            <span class="cursor-pointer text-sm text-blue-600">
-              Join free today</span
-            >
-          </p>
-        </div>
+  <div class="w-full h-[80vh] flex">
+    <img
+      src="https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+      alt="background"
+      class="object-cover object-center h-[80vh] w-7/12"
+    />
+    <div
+      class="bg-white flex flex-col justify-center items-center w-5/12 shadow-lg"
+    >
+      <h1 class="text-5xl font-bold text-yellow-500 mb-8">LOGIN</h1>
+      <div class="w-1/2 text-center">
+        <input
+          type="text"
+          name="username"
+          placeholder="username"
+          autocomplete="off"
+          class="shadow-md border w-full h-10 px-3 py-2 text-yellow-500 focus:outline-none focus:border-orange-500 mb-8 rounded"
+          v-model="email"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          autocomplete="off"
+          class="shadow-md border w-full h-10 px-3 py-2 text-yellow-500 focus:outline-none focus:border-orange-500 mb-8 rounded"
+          v-model="password"
+        />
+        <button
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-lg focus:outline-none shadow"
+          @click="login()"
+        >
+          Sign In
+        </button>
+        <br />
+        <p class="font-bold mt-5">
+          会員登録は<nuxt-link
+            to="/register"
+            class="text-indigo-700 hover:text-yellow-500"
+            >こちら</nuxt-link
+          >
+        </p>
       </div>
     </div>
   </div>

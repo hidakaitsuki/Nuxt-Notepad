@@ -1,20 +1,25 @@
 <template>
   <div>
-    <div class="h-32 bg-white opacity-80 shadow-md bottom-0">
+    <div class="h-28 bg-white opacity-80 shadow-md bottom-0">
       <div>
-        <img src="../static/logo.png" class="h-32 ml-2" />
+        <img src="../static/logo.png" class="h-28 ml-2" />
       </div>
       <div class="">
         <h1 class="font-header text-8xl absolute right-[40%] top-0">
           Nuxt-Notepad
         </h1>
       </div>
-      <div class="mt-7 left-2 absolute right-1 top-0 text-right">
+      <div class="mt-10 left-2 absolute right-1 top-0 text-right">
         <nuxt-link to="/" class="font-ui font-bold pr-3"
           >トップページ</nuxt-link
         >
-        <nuxt-link to="/register" class="font-ui font-bold pr-3"
-          >会員登録</nuxt-link
+        <nuxt-link to="/register" class="font-ui font-bold pr-3">
+          <img
+            src="../static/registericon.jpg"
+            class="h-5 inline-block mr-[-3px] mb-1"
+            alt=""
+          />
+          会員登録</nuxt-link
         >
         <nuxt-link
           to="/login"
@@ -22,25 +27,33 @@
           v-if="loginFlag === false"
           ><img
             src="../static/loginlogo.jpg"
-            class="h-5 inline-block mr-[-10px]"
+            class="h-5 inline-block mr-[-8px] opacity-80"
             alt=""
           />
           ログイン</nuxt-link
         >
+
         <button
+          id="logout"
           type="button"
           class="font-ui font-bold pr-3"
           v-if="loginFlag === true"
           @click="logOut()"
         >
+          <img
+            src="../static/logout.jpg"
+            class="h-5 inline-block mr-[-5px]"
+            alt=""
+          />
           ログアウト
         </button>
+
         <nuxt-link
           to="/memo"
           class="mr-5 font-ui font-bold"
           v-if="loginFlag === true"
           ><img
-            src="../static/memo.jpg"
+            src="../static/headmemo.jpg"
             class="h-5 inline-block"
             alt=""
           />メモ帳</nuxt-link

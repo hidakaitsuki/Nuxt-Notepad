@@ -101,7 +101,6 @@ export default defineComponent({
     const memos = ref(new Array());
     const router = useRouter();
     const loginFlag = store.getters.getLoginFlag;
-    
 
     // ログインしていなければトップページに飛ばす
     if (loginFlag === false) {

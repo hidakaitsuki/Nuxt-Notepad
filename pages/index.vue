@@ -1,22 +1,15 @@
 <template>
-  <div>
-    <div
-      class="flex justify-center mx-auto bg-topimg bg-cover h-[100vh] bg-no-repeat"
-    ></div>
-    <div>
-      <!-- <button
-        type="buton"
-        class="bg-blue-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"
-      >
-        <nuxt-link to="register" class="">会員登録</nuxt-link>
-      </button>
-      <button
-        type="button"
-        class="ml-10 bg-blue-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"
-      >
-        ログイン
-      </button> -->
-    </div>
+  <div class="relative">
+    <transition :appear="animation">
+      <div
+        class="flex justify-center mx-auto bg-topimg bg-cover h-[100vh] bg-no-repeat"
+      ></div>
+    </transition>
+    <h1
+      class="text-[80px] text-white w-[100%] text-center absolute top-10 font-ui"
+    >
+      仕事もプライベートもすっきり整理
+    </h1>
   </div>
 </template>
 
@@ -34,6 +27,8 @@ export default defineComponent({
   setup() {
     const { $axios } = useContext();
     const { store } = useContext();
+    const animation = ref(false);
+    animation.value = true;
     // SPAでのaxios
     // const getdata = async () => {
     //   const response = await $axios.get(
@@ -50,6 +45,19 @@ export default defineComponent({
     //   );
     //   console.log(res.data);
     // });
+    return { animation };
   },
 });
 </script>
+
+<style scoped>
+.v-enter-active {
+  transition: opacity 2s;
+}
+.v-enter {
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+</style>

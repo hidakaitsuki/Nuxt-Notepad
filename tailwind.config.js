@@ -17,7 +17,7 @@ module.exports = {
         header: ["Snell Roundhand"],
       },
       backgroundImage: (theme) => ({
-        registerimg: "url('static/register.jpeg')",
+        registerimg: "url('static/register.jpg')",
         loginimg: "url('static/photo-1486520299386-6d106b22014b.jpeg')",
         topimg: "url('static/top.jpg')",
       }),
