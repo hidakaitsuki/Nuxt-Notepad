@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <transition :appear="animation">
+    <transition :appear="true">
       <div
         class="flex justify-center mx-auto bg-topimg bg-cover h-[100vh] bg-no-repeat"
       ></div>
@@ -15,38 +15,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {
-  defineComponent,
-  ref,
-  useAsync,
-  useContext,
-  useStore,
-} from "@nuxtjs/composition-api";
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
-  setup() {
-    const { $axios } = useContext();
-    const { store } = useContext();
-    const animation = ref(false);
-    animation.value = true;
-    // SPAでのaxios
-    // const getdata = async () => {
-    //   const response = await $axios.get(
-    //     "https://pokeapi.co/api/v2/pokemon/ditto"
-    //   );
-    //   console.log(response.data);
-    // };
-    // getdata();
-
-    // // SSR・・・サーバーサイドレンダリング(初回アクセス時のみサーバーサイドで実行)
-    // useAsync(async () => {
-    //   const res = await $axios.get(
-    //     "https://jsonplaceholder.typicode.com/posts/"
-    //   );
-    //   console.log(res.data);
-    // });
-    return { animation };
-  },
+  setup() {},
 });
 </script>
 

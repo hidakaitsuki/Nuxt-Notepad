@@ -59,31 +59,44 @@ import {
 export default defineComponent({
   setup() {
     const { $axios } = useContext();
-    const email = ref("");
-    const password = ref("");
     const router = useRouter();
     const store = useStore();
+    // 入力されたメールアドレス
+    const email = ref("");
+    // 入力されたパスワード
+    const password = ref("");
+    // エラーメッセージ
     const errorMessage = ref(new Array());
+
+    /**
+     * ログインする.
+     */
     const login = async () => {
+      // エラーがあるかのフラグ
       const errorFlag = ref(false);
+      // クリックしたときに一度初期化する
       errorFlag.value = false;
       errorMessage.value = [];
+      // メールアドレスが未入力のときのエラー
       if (email.value === "") {
         errorMessage.value.push("※メールアドレスを入力してください");
         errorFlag.value = true;
       }
+      // パスワードが未入力のときのエラー
       if (password.value === "") {
         errorMessage.value.push("※パスワードを入力してください");
         errorFlag.value = true;
       }
+      // エラーが一つでもあれば先に進めない
       if (errorFlag.value === true) {
         return;
       }
+
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/login",
         { email: email.value, password: password.value }
       );
-      console.log(res.data);
+      //  APIにアクセスしstatusがsuccessならメモ帳の画面に進む
       if (res.data.status === "success") {
         store.commit("setLoginUser", res.data.data[0]);
         store.commit("loginFlag");
@@ -91,6 +104,7 @@ export default defineComponent({
         console.log(store.getters.getLoginFlag);
         router.push("/memo");
       } else {
+        // アドレスとパスワードが不一致のときのエラー
         errorMessage.value.push("※" + res.data.message);
       }
     };

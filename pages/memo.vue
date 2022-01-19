@@ -111,34 +111,46 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const { $axios } = useContext();
-    const modalFlag = ref(false);
-    const memos = ref(new Array());
     const router = useRouter();
+    // 新規作成のモーダルのフラグ
+    const modalFlag = ref(false);
+    // ログインしているユーザーのメモ一覧
+    const memos = ref(new Array());
+    // ログインしているかどうかのフラグ
     const loginFlag = store.getters.getLoginFlag;
-
     // ログインしていなければトップページに飛ばす
     if (loginFlag === false) {
       router.push("/");
     }
-    // 新規作成モーダルを開く
+
+    /**
+     * モーダルを開く
+     */
     const openModal = () => {
       modalFlag.value = true;
     };
-    // モーダルを閉じる
+    /**
+     * モーダルを閉じる
+     */
     const falseModal = () => {
       modalFlag.value = false;
     };
     // 現在ログインしているユーザー情報を取得
     const user = store.getters.getLoginUser;
-    // ログインしているユーザーIDからメモをとってくる
+    // メモが1つもないときの表示
     const noMemoFlag = ref(false);
+
+    /**
+     * ログインしているユーザーIDからメモをとってくる.
+     */
     const getMemo = async () => {
       const res = await $axios.get(
         `https://api-rks-generator.herokuapp.com/memo/memo/${user.id}`
       );
       memos.value = res.data;
-      // メモがなかれば新規作成ボタンを表示する
+      // メモがないときの表示を初期化
       noMemoFlag.value = false;
+      // メモがなければ新規作成ボタンを表示する
       if (memos.value.length === 0) {
         noMemoFlag.value = true;
       }
@@ -147,18 +159,25 @@ export default defineComponent({
 
     // メモの一覧を押したときに詳細を表示する
     let details = ref("");
-    // 初期は何も選択されていないので詳細画面には何も表示しない
+    // 詳細画面のフラグ(初期は何も選択されていないので詳細画面には何も表示しない)
     const detailFlag = ref(false);
+    /**
+     * メモ一覧でクリックしたメモを詳細の変数に入れる.
+     * @param id -メモID
+     */
     const getDetail = (id: number) => {
-      // 配列の何番目に押したメモがあるか検索
+      // 配列の何番目にクリックしたメモがあるか検索
       const index = memos.value.findIndex((memo) => memo.id === id);
       // 詳細用の変数に押したメモを代入する
       details.value = memos.value[index];
-      console.log(details.value);
       // 詳細用の画面を表示
       detailFlag.value = true;
     };
-    // 編集する
+
+    /**
+     * メモを編集する.
+     * @param id - 編集するメモID
+     */
     const updateMemo = async (id: number) => {
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/memo/update",
@@ -168,9 +187,12 @@ export default defineComponent({
           date: format(new Date(), "yyyy/MM/dd"),
         }
       );
-      console.log(res.data);
     };
-
+    
+    /**
+     * メモを削除する.
+     * @param id -削除するメモID
+     */
     const deleteMemo = async (id: number) => {
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/memo/delete",
@@ -181,15 +203,22 @@ export default defineComponent({
       // 再度データベースからメモを取って来る
       getMemo();
     };
-    // 検索する
+
+    // 検索欄に入力された検索ワード
     const searchWord = ref("");
+    /**
+     * メモを検索する.
+     */
     const search = async () => {
+      // 一度全件検索する
       await getMemo();
+      // タイトル、内容どちらに入っていても検索する
       memos.value = memos.value.filter(
         (memo) =>
           memo.title.includes(searchWord.value) ||
           memo.contents.includes(searchWord.value)
       );
+      // 検索したときは詳細画面を消す
       detailFlag.value = false;
     };
 

@@ -3,25 +3,54 @@ import createPersistedState from "vuex-persistedstate";
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      // ログインしているユーザー情報
       loginUser: "",
+      // ログインしているかのフラグ
       loginFlag: false,
     },
     mutations: {
+      /**
+       * ログインしたユーザーをstateに格納する.
+       * @param state -ステート
+       * @param payload - ログインしているユーザー情報
+       */
       setLoginUser(state, payload) {
         state.loginUser = payload;
       },
+
+      /**
+       * ログインフラグを上げる.
+       * @param state -ステート
+       */
       loginFlag(state) {
         state.loginFlag = true;
       },
+
+      /**
+       * ログインフラグを下ろす.
+       * @param state　-ステート
+       */
       logOutFlag(state) {
+        // stateのログインしているユーザーを初期化
+        state.loginUser = "";
         state.loginFlag = false;
       },
     },
     actions: {},
     getters: {
+      /**
+       * ログインしているユーザー情報を返す.
+       * @param state -ステート
+       * @returns -ユーザー情報
+       */
       getLoginUser(state) {
         return state.loginUser;
       },
+      /**
+       * ログイン状態を返す.
+       * @param state -ステート
+       * @returns -ログイン状態
+       */
       getLoginFlag(state) {
         return state.loginFlag;
       },

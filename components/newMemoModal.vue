@@ -56,19 +56,19 @@ import format from "date-fns/format";
 export default defineComponent({
   setup(props, context) {
     const { $axios } = useContext();
-    const title = ref("");
-    const contents = ref("");
     const store = useStore();
+    // 入力されたタイトル
+    const title = ref("");
+    // 入力された内容
+    const contents = ref("");
+    // ログインしているユーザー情報を取得する
     const user = store.getters.getLoginUser;
 
-    //  モーダルを閉じる（親のmodalFlagをfalseにさせる）
-    const childFalseModal = () => {
-      // 親に"childFalseModal"としてメソッドを渡す
-      context.emit("childFalseModal");
-    };
-    // メモを新規作成する
+    /**
+     * メモを新規作成する
+     */
     const createMemo = async () => {
-      // 今の日付
+      // 今の日付を取得
       const date = format(new Date(), "yyyy/MM/dd");
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/memo",
@@ -85,6 +85,13 @@ export default defineComponent({
       context.emit("childGetMemo");
     };
 
+    /**
+     * キャンセルする.
+     */
+    const childFalseModal = () => {
+      // 親に"childFalseModal"としてメソッドを渡す
+      context.emit("childFalseModal");
+    };
     return { title, contents, childFalseModal, createMemo };
   },
 });

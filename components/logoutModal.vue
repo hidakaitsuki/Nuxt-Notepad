@@ -42,12 +42,20 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const router = useRouter();
+    /**
+     * ログアウトする.
+     */
     const logout = () => {
+      // storeのログイン情報を削除する
       store.commit("logOutFlag");
       // 親に"childFalseModal"としてメソッドを渡す
       context.emit("childFalseModal");
+      // ログアウトしたらトップページへ飛ばす
       router.push("/");
     };
+    /**
+     * ログアウトをキャンセルする.
+     */
     const cancel = () => {
       // 親に"childFalseModal"としてメソッドを渡す
       context.emit("childFalseModal");

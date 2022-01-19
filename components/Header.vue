@@ -62,7 +62,7 @@
     <logout-modal
       class="left-0 fixed z-10 top-0 bottom-0"
       @childFalseModal="falseModal"
-      v-if="modalFlag === true"
+      v-if="logoutModalFlag === true"
     ></logout-modal>
   </div>
 </template>
@@ -81,19 +81,32 @@ export default defineComponent({
   components: { logoutModal },
   setup() {
     const store = useStore();
-    const modalFlag = ref(false);
+    // ログアウトモーダルのフラグ
+    const logoutModalFlag = ref(false);
+    // ログインしているユーザーのフラグ(computedで変更される度に受け取る)
     const loginFlag = computed(() => store.getters.getLoginFlag);
+
+    /**
+     *ログアウトするモーダルを開く.
+     */
     const logOut = () => {
-      modalFlag.value = true;
+      logoutModalFlag.value = true;
     };
+    /**
+     * ログアウトするモーダルを閉じる.
+     */
     const falseModal = () => {
-      modalFlag.value = false;
+      logoutModalFlag.value = false;
     };
+
     const router = useRouter();
+    /**
+     * topページに飛ばす.
+     */
     const top = () => {
       router.push("/");
     };
-    return { loginFlag, logOut, modalFlag, falseModal, top };
+    return { loginFlag, logOut, logoutModalFlag, falseModal, top };
   },
 });
 </script>

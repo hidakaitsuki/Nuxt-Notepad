@@ -114,6 +114,7 @@
           </div>
         </div>
       </div>
+      <!-- 会員登録完了のモーダル -->
       <register-modal
         class="left-0 fixed z-10 top-0"
         v-if="modalfrag"
@@ -134,35 +135,50 @@ import registerModal from "~/components/registerModal.vue";
 export default defineComponent({
   components: { registerModal },
   setup() {
-    const name = ref("");
-    const email = ref("");
-    const password = ref("");
-    const c_password = ref("");
     const { $axios } = useContext();
+    // 入力された名前
+    const name = ref("");
+    // 入力されたメールアドレス
+    const email = ref("");
+    // 入力されたパスワード
+    const password = ref("");
+    // 入力された確認用パスワード
+    const c_password = ref("");
+    // 会員登録完了のモーダルを開くフラグ
     const modalfrag = ref(false);
+    // エラーメッセージ
     const errorMessage = ref(new Array());
+    // エラーがあるかのフラグ
     const errorFlag = ref(false);
 
+    /**
+     * 会員登録をする.
+     */
     const registration = async () => {
+      // クリックしたときに初期化する
       errorMessage.value = [];
       errorFlag.value = false;
+      // 名前が未入力のときのエラー
       if (name.value === "") {
         errorMessage.value.push("※名前を入力してください");
         errorFlag.value = true;
       }
+      // メールアドレスが未入力のときのエラー
       if (email.value === "") {
         errorMessage.value.push("※メールアドレスを入力してください");
         errorFlag.value = true;
       }
+      // パスワードが未入力のときのエラー
       if (password.value === "") {
         errorMessage.value.push("※パスワードを入力してください");
         errorFlag.value = true;
       }
+      // パスワードと確認用パスワードが未入力ときのエラー
       if (password.value !== c_password.value) {
         errorMessage.value.push("※パスワードと確認用パスワードが一致しません");
         errorFlag.value = true;
       }
-
+      // 1つでもエラーがあれば先に進めない
       if (errorFlag.value === true) {
         return;
       }
@@ -174,10 +190,11 @@ export default defineComponent({
           password: password.value,
         }
       );
-      console.log(res.data);
+      // APIに接続してstatusがsuccessなら会員登録完了のモーダルを開く
       if (res.data.status === "success") {
         modalfrag.value = true;
       } else {
+        // メールアドレスが既に登録されているときのエラー
         errorMessage.value.push("※" + res.data.message);
         errorFlag.value = true;
       }
