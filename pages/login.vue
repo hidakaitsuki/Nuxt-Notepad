@@ -8,8 +8,17 @@
     <div
       class="bg-white flex flex-col justify-center items-center w-5/12 shadow-lg"
     >
-      <h1 class="text-5xl font-bold text-yellow-500 mb-8">LOGIN</h1>
-      <div class="w-1/2 text-center">
+      <h1 class="text-5xl font-bold text-yellow-500">LOGIN</h1>
+      <div class="h-24 w-[100%] pt-4">
+        <p
+          class="text-red-500 text-center"
+          v-for="error of errorMessage"
+          :key="error"
+        >
+          {{ error }}
+        </p>
+      </div>
+      <div class="text-center">
         <input
           type="text"
           name="username"
@@ -33,13 +42,6 @@
           Sign In
         </button>
         <br />
-        <p class="font-bold mt-5">
-          会員登録は<nuxt-link
-            to="/register"
-            class="text-indigo-700 hover:text-yellow-500"
-            >こちら</nuxt-link
-          >
-        </p>
       </div>
     </div>
   </div>
@@ -61,7 +63,22 @@ export default defineComponent({
     const password = ref("");
     const router = useRouter();
     const store = useStore();
+    const errorMessage = ref(new Array());
     const login = async () => {
+      const errorFlag = ref(false);
+      errorFlag.value = false;
+      errorMessage.value = [];
+      if (email.value === "") {
+        errorMessage.value.push("※メールアドレスを入力してください");
+        errorFlag.value = true;
+      }
+      if (password.value === "") {
+        errorMessage.value.push("※パスワードを入力してください");
+        errorFlag.value = true;
+      }
+      if (errorFlag.value === true) {
+        return;
+      }
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/login",
         { email: email.value, password: password.value }
@@ -74,9 +91,10 @@ export default defineComponent({
         console.log(store.getters.getLoginFlag);
         router.push("/memo");
       } else {
+        errorMessage.value.push("※" + res.data.message);
       }
     };
-    return { login, email, password };
+    return { login, email, password, errorMessage };
   },
 });
 </script>

@@ -1,19 +1,28 @@
 <template>
   <div>
     <div class="h-28 bg-white opacity-80 shadow-md bottom-0">
-      <div>
-        <img src="../static/logo.png" class="h-28 ml-2" />
-      </div>
-      <div class="">
-        <h1 class="font-header text-8xl absolute right-[40%] top-0">
+      <img
+        src="../static/logo.png"
+        class="h-28 ml-2 cursor-pointer"
+        @click="top()"
+      />
+      <nuxt-link to="/">
+        <h1 class="font-header text-8xl b absolute right-[40%] top-0">
           Nuxt-Notepad
         </h1>
-      </div>
-      <div class="mt-10 left-2 absolute right-1 top-0 text-right">
-        <nuxt-link to="/" class="font-ui font-bold pr-3"
-          >トップページ</nuxt-link
+      </nuxt-link>
+      <div class="mt-10 absolute right-1 top-0 text-right">
+        <nuxt-link
+          to="/memo"
+          class="mr-10 font-ui font-bold"
+          v-if="loginFlag === true"
+          ><img
+            src="../static/headmemo.jpg"
+            class="h-5 inline-block"
+            alt=""
+          />メモ帳</nuxt-link
         >
-        <nuxt-link to="/register" class="font-ui font-bold pr-3">
+        <nuxt-link to="/register" class="font-ui font-bold pr-3 mr-5">
           <img
             src="../static/registericon.jpg"
             class="h-5 inline-block mr-[-3px] mb-1"
@@ -47,17 +56,6 @@
           />
           ログアウト
         </button>
-
-        <nuxt-link
-          to="/memo"
-          class="mr-5 font-ui font-bold"
-          v-if="loginFlag === true"
-          ><img
-            src="../static/headmemo.jpg"
-            class="h-5 inline-block"
-            alt=""
-          />メモ帳</nuxt-link
-        >
       </div>
     </div>
     <!-- childFalseModalを子から受け取って親のfalseModalを発火させる -->
@@ -74,6 +72,7 @@ import {
   computed,
   defineComponent,
   ref,
+  useRouter,
   useStore,
 } from "@nuxtjs/composition-api";
 import logoutModal from "./logoutModal.vue";
@@ -90,7 +89,11 @@ export default defineComponent({
     const falseModal = () => {
       modalFlag.value = false;
     };
-    return { loginFlag, logOut, modalFlag, falseModal };
+    const router = useRouter();
+    const top = () => {
+      router.push("/");
+    };
+    return { loginFlag, logOut, modalFlag, falseModal, top };
   },
 });
 </script>

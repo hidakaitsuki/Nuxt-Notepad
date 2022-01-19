@@ -1,52 +1,43 @@
 <template>
   <div>
-    <div class="container mx-auto pt-20 mb-20">
-      <div class="flex justify-center px-6">
+    <div class="h-[80vh]">
+      <div class="flex justify-center h-[100%] w-screen">
         <!-- Row -->
-        <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+        <div class="w-full h-[100%] flex">
           <!-- Col -->
-          <div
-            class="w-full h-auto hidden lg:block lg:w-5/12 bg-cover rounded-l-lg bg-registerimg"
-          ></div>
+          <div class="w-[60%] h-auto bg-cover bg-registerimg"></div>
           <!-- Col -->
-          <div
-            class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none"
-          >
-            <h3 class="pt-4 text-2xl text-center">Create an Account!</h3>
+          <div class="w-[60%] bg-white p-36">
+            <h3 class="text-5xl font-bold text-center text-yellow-500 mb-8">
+              Create an Account!
+            </h3>
+            <div class="h-20">
+              <p
+                class="text-center text-red-500"
+                v-for="error of errorMessage"
+                :key="error"
+              >
+                {{ error }}
+              </p>
+            </div>
             <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-              <div class="mb-4 md:flex md:justify-between">
-                <div class="mb-4 md:mr-2 md:mb-0">
-                  <label
-                    class="block mb-2 text-sm font-bold text-gray-700"
-                    for="firstName"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="firstName"
-                    type="text"
-                    placeholder="First Name"
-                    v-model="firstName"
-                  />
-                </div>
-                <div class="md:ml-2">
-                  <label
-                    class="block mb-2 text-sm font-bold text-gray-700"
-                    for="lastName"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="lastName"
-                    type="text"
-                    placeholder="Last Name"
-                    v-model="lastName"
-                  />
-                </div>
+              <div class="mb-7 md:mr-2 md:mb-0">
+                <label
+                  class="block mb-2 text-sm font-bold text-gray-700 w-10"
+                  for="firstName"
+                >
+                  Name
+                </label>
+                <input
+                  class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  id="firstName"
+                  type="text"
+                  placeholder="Name"
+                  v-model="name"
+                />
               </div>
-              <div class="mb-4">
+
+              <div class="mt-4 mb-4">
                 <label
                   class="block mb-2 text-sm font-bold text-gray-700"
                   for="email"
@@ -90,6 +81,7 @@
                     id="c_password"
                     type="password"
                     placeholder="******************"
+                    v-model="c_password"
                   />
                 </div>
               </div>
@@ -116,14 +108,16 @@
                   class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                   href="./index.html"
                 >
-                  Already have an account? Login!
                 </a>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <register-modal class="left-0 fixed z-10 top-0" v-if="modalfrag"></register-modal>
+      <register-modal
+        class="left-0 fixed z-10 top-0"
+        v-if="modalfrag"
+      ></register-modal>
     </div>
   </div>
 </template>
@@ -140,28 +134,64 @@ import registerModal from "~/components/registerModal.vue";
 export default defineComponent({
   components: { registerModal },
   setup() {
-    const firstName = ref("");
-    const lastName = ref("");
+    const name = ref("");
     const email = ref("");
     const password = ref("");
+    const c_password = ref("");
     const { $axios } = useContext();
-    const router = useRouter();
     const modalfrag = ref(false);
+    const errorMessage = ref(new Array());
+    const errorFlag = ref(false);
+
     const registration = async () => {
+      errorMessage.value = [];
+      errorFlag.value = false;
+      if (name.value === "") {
+        errorMessage.value.push("※名前を入力してください");
+        errorFlag.value = true;
+      }
+      if (email.value === "") {
+        errorMessage.value.push("※メールアドレスを入力してください");
+        errorFlag.value = true;
+      }
+      if (password.value === "") {
+        errorMessage.value.push("※パスワードを入力してください");
+        errorFlag.value = true;
+      }
+      if (password.value !== c_password.value) {
+        errorMessage.value.push("※パスワードと確認用パスワードが一致しません");
+        errorFlag.value = true;
+      }
+
+      if (errorFlag.value === true) {
+        return;
+      }
       const res = await $axios.post(
         "https://api-rks-generator.herokuapp.com/memo/register",
         {
-          name: firstName.value + lastName.value,
+          name: name.value,
           email: email.value,
           password: password.value,
         }
       );
-      console.log(res);
+      console.log(res.data);
       if (res.data.status === "success") {
         modalfrag.value = true;
+      } else {
+        errorMessage.value.push("※" + res.data.message);
+        errorFlag.value = true;
       }
     };
-    return { firstName, lastName, email, password, registration, modalfrag };
+    return {
+      name,
+      email,
+      password,
+      c_password,
+      registration,
+      modalfrag,
+      errorFlag,
+      errorMessage,
+    };
   },
 });
 </script>

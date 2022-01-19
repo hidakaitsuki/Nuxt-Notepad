@@ -25,14 +25,14 @@
         </div>
         <div class="flex justify-center">
           <button
-            class="mr-2 flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-teal-dark"
+            class="mr-2 flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-blue-500"
             type="button"
             @click="createMemo()"
           >
             新規作成
           </button>
           <button
-            class="flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-teal-dark"
+            class="flex-no-shrink text-white py-2 px-4 rounded bg-blue-700 hover:bg-blue-500"
             type="button"
             @click="childFalseModal"
           >

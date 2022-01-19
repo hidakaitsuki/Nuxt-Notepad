@@ -1,9 +1,11 @@
 <template>
   <div class="text-center h-[800px]">
-    検索<br /><input
+    <input
       type="text"
-      class="border"
+      class="border mt-2"
       placeholder="検索ワード"
+      v-model="searchWord"
+      @keydown="search()"
     /><br />
     <button type="button">
       <img src="../static/newmemo.png" class="h-10" @click="openModal()" />
@@ -12,9 +14,11 @@
     <hr />
     <div class="relative h-[800px]">
       <!-- メモ一覧 -->
-      <div class="w-[25%] h-[705px] border-r-2">
+      <div
+        class="w-[25%] h-[705px] border-r-2 overflow-y-scroll overflow-hidden"
+      >
         <div
-          class="bg-white p-7 top-0 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative overflow-y-scroll"
+          class="bg-white p-7 top-0 shadow-md border-2 cursor-pointer hover:bg-gray-200 rounded-md w-[100%] relative checked:bg-indigo-500"
           v-for="memo of memos"
           v-bind:key="memo.id"
           @click="getDetail(memo.id)"
@@ -60,7 +64,7 @@
           @click="updateMemo(details.id)"
           class="text-white py-2 px-4 rounded bg-blue-700"
         >
-          登録
+          編集
         </button>
         <button
           type="button"
@@ -70,6 +74,16 @@
           削除
         </button>
       </div>
+    </div>
+    <div class="bottom-[50%] absolute w-screen font-ui" v-if="noMemoFlag">
+      メモがありません<br />
+      <button
+        type="button"
+        class="bg-blue-500 font-ui rounded-xl text-white px-5 py-2 text-base"
+        @click="openModal()"
+      >
+        <img src="../static/newmemo.png" class="w-8 inline-block" />新規作成する
+      </button>
     </div>
     <!-- childFalseModalを子から受け取って親のfalseModalを発火させる -->
     <new-memo-modal
@@ -106,7 +120,7 @@ export default defineComponent({
     if (loginFlag === false) {
       router.push("/");
     }
-    // モーダルを開く
+    // 新規作成モーダルを開く
     const openModal = () => {
       modalFlag.value = true;
     };
@@ -117,12 +131,17 @@ export default defineComponent({
     // 現在ログインしているユーザー情報を取得
     const user = store.getters.getLoginUser;
     // ログインしているユーザーIDからメモをとってくる
+    const noMemoFlag = ref(false);
     const getMemo = async () => {
       const res = await $axios.get(
         `https://api-rks-generator.herokuapp.com/memo/memo/${user.id}`
       );
       memos.value = res.data;
-      console.log(memos.value);
+      // メモがなかれば新規作成ボタンを表示する
+      noMemoFlag.value = false;
+      if (memos.value.length === 0) {
+        noMemoFlag.value = true;
+      }
     };
     getMemo();
 
@@ -162,6 +181,17 @@ export default defineComponent({
       // 再度データベースからメモを取って来る
       getMemo();
     };
+    // 検索する
+    const searchWord = ref("");
+    const search = async () => {
+      await getMemo();
+      memos.value = memos.value.filter(
+        (memo) =>
+          memo.title.includes(searchWord.value) ||
+          memo.contents.includes(searchWord.value)
+      );
+      detailFlag.value = false;
+    };
 
     return {
       modalFlag,
@@ -174,6 +204,9 @@ export default defineComponent({
       detailFlag,
       updateMemo,
       deleteMemo,
+      searchWord,
+      search,
+      noMemoFlag,
     };
   },
 });
