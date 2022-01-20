@@ -1,25 +1,26 @@
 <template>
   <div class="relative">
     <transition :appear="true">
-      <div
-        class="flex justify-center mx-auto bg-topimg bg-cover h-[100vh] bg-no-repeat"
-      ></div>
+      <div class="bg-topimg h-[70vh] bg-cover lg:h-[100vh] bg-no-repeat"></div>
     </transition>
 
     <transition name="fadein">
       <h1
-        class="text-[80px] text-white w-[100%] text-center absolute top-10 font-ui"
+        class="sm:text-[20px] lg:text-[80px] text-white w-[100%] text-center absolute top-10 font-ui"
         v-if="show"
       >
         仕事もプライベートもすっきり整理
       </h1>
     </transition>
     <transition name="fadeinbutton">
-      <div class="absolute bottom-[200px] left-[43%]" v-if="show">
+      <div
+        class="absolute left-[30%] bottom-[100px] lg:bottom-[200px] lg:left-[43%]"
+        v-if="show"
+      >
         <nuxt-link to="/register">
           <button
             type="button"
-            class="border-3 animate-bounce bg-yellow-400 shadow rounded-full text-2xl font-ui font-bold w-60 h-24"
+            class="w-32 h-20  rounded-3xl animate-bounce bg-yellow-400 shadow lg:rounded-full lg:text-2xl font-ui font-bold lg:w-60 lg:h-24"
           >
             会員登録はこちら
           </button>
