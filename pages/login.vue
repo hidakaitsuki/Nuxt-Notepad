@@ -100,8 +100,6 @@ export default defineComponent({
       if (res.data.status === "success") {
         store.commit("setLoginUser", res.data.data[0]);
         store.commit("loginFlag");
-        console.log(store.getters.getLoginUser);
-        console.log(store.getters.getLoginFlag);
         router.push("/memo");
       } else {
         // アドレスとパスワードが不一致のときのエラー

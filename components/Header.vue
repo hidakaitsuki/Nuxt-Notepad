@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="h-28 bg-white opacity-80 shadow-md bottom-0">
+    <div class="h-28 bg-white shadow-md bottom-0">
       <img
         src="../static/logo.png"
         class="h-28 ml-2 cursor-pointer"
         @click="top()"
       />
       <nuxt-link to="/">
-        <h1 class="font-header text-8xl b absolute right-[40%] top-0">
-          Nuxt-Notepad
+        <h1 class="font-header text-8xl b absolute right-[45%] top-0">
+          Notepad
         </h1>
       </nuxt-link>
       <div class="mt-10 absolute right-1 top-0 text-right">
