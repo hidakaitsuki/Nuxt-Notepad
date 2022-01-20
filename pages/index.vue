@@ -6,7 +6,7 @@
 
     <transition name="fadein">
       <h1
-        class="sm:text-[20px] lg:text-[80px] text-white w-[100%] text-center absolute top-10 font-ui"
+        class="text-[20px] lg:text-[80px] text-white w-[100%] text-center absolute top-10 font-ui"
         v-if="show"
       >
         仕事もプライベートもすっきり整理
@@ -14,13 +14,13 @@
     </transition>
     <transition name="fadeinbutton">
       <div
-        class="absolute left-[30%] bottom-[100px] lg:bottom-[200px] lg:left-[43%]"
+        class="absolute  w-screen text-center bottom-[100px] lg:bottom-[200px]"
         v-if="show"
       >
         <nuxt-link to="/register">
           <button
             type="button"
-            class="w-32 h-20  rounded-3xl animate-bounce bg-yellow-400 shadow lg:rounded-full lg:text-2xl font-ui font-bold lg:w-60 lg:h-24"
+            class="w-32 h-20 inline-block rounded-3xl animate-bounce bg-yellow-400 shadow lg:rounded-full lg:text-2xl font-ui font-bold lg:w-60 lg:h-24"
           >
             会員登録はこちら
           </button>
