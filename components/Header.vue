@@ -61,7 +61,7 @@
       </div>
       <!-- スマホ用 -->
       <div
-        class="float-right h-28 w-[25%] text-xs absolute right-1 top-3 lg:hidden"
+        class="float-right h-28 w-[28%] text-xs absolute right-1 top-3 lg:hidden"
       >
         <div class="w-full m-auto">
           <nuxt-link
