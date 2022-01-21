@@ -98,11 +98,11 @@
             ログイン</nuxt-link
           >
         </div>
-        <div class="w-full mt-3 border-8">
+        <div class="w-full mt-3 ">
           <button
             id="logout"
             type="button"
-            class="font-ui font-bold"
+            class="font-ui font-bold text-left w-full"
             v-if="loginFlag === true"
             @click="logOut()"
           >
