@@ -61,12 +61,12 @@
       </div>
       <!-- スマホ用 -->
       <div
-        class="float-right h-28 w-[25%] text-xs absolute right-1 top-3 lg:hidden"
+        class="float-right h-28 w-[28%] text-xs absolute right-1 top-3 lg:hidden"
       >
         <div class="w-full m-auto">
           <nuxt-link
             to="/memo"
-            class="mr-10 font-ui font-bold"
+            class=" font-ui font-bold"
             v-if="loginFlag === true"
             ><img
               src="../static/headmemo.jpg"
