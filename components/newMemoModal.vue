@@ -10,14 +10,19 @@
       >
         <div class="mb-8">
           <p>タイトル</p>
-          <input type="text " size="100" class="border-2" v-model="title" />
+          <input
+            type="text "
+            size=""
+            class="border-2 w-full lg:w-[80%]"
+            v-model="title"
+          />
         </div>
 
         <div>
           <p>内容</p>
           <textarea
             type="text"
-            class="border-2"
+            class="border-2 w-full lg:w-[80%]"
             rows="20"
             cols="100"
             v-model="contents"
