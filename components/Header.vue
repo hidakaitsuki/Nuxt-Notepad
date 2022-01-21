@@ -102,7 +102,7 @@
           <button
             id="logout"
             type="button"
-            class="font-ui font-bold pr-3"
+            class="font-ui font-bold"
             v-if="loginFlag === true"
             @click="logOut()"
           >
