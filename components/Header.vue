@@ -98,7 +98,7 @@
             ログイン</nuxt-link
           >
         </div>
-        <div class="w-full mt-3">
+        <div class="w-full mt-3 border-8">
           <button
             id="logout"
             type="button"
