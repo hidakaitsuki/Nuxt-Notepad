@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="h-28 bg-white shadow-md bottom-0 relative">
+    <div class="h-28 bg-white shadow-md bottom-0 relative z-0">
       <img
         src="../static/logo.png"
         class="h-28 ml-2 cursor-pointer"
         @click="top()"
       />
-      <nuxt-link to="/">
         <h1
-          class="absolute top-0 w-full h-full flex justify-center items-center font-header text-4xl lg:text-8xl lg:top-[-10px]"
+          class="absolute z-[-1] top-0 w-full h-full flex justify-center items-center font-header text-4xl lg:text-8xl lg:top-[-10px]"
         >
+      <nuxt-link to="/">
           Notepad
-        </h1>
       </nuxt-link>
+        </h1>
       <div class="mt-10 absolute right-1 top-0 text-right hidden lg:block">
         <nuxt-link
           to="/memo"
