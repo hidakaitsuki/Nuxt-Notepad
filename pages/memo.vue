@@ -24,12 +24,12 @@
           @click="getDetail(memo.id)"
         >
           <h3
-            class="absolute top-1 left-2 text-left text-xl text-gray-800 font-semibold w-[80%] overflow-ellipsis overflow-hidden"
+            class="absolute top-1 left-2 text-left text-xl text-gray-800 font-semibold w-[80%] whitespace-nowrap overflow-ellipsis overflow-hidden"
           >
             {{ memo.title }}
           </h3>
           <p
-            class="absolute text-gray-400 top-7 text-left left-4 w-[70%] overflow-ellipsis overflow-hidden"
+            class="absolute hidden lg:block text-gray-400 top-7 text-left left-4 w-[70%] whitespace-nowrap overflow-ellipsis overflow-hidden"
           >
             {{ memo.contents }}
           </p>

@@ -3,10 +3,10 @@
     <img
       src="https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
       alt="background"
-      class="object-cover object-center h-[80vh] w-7/12"
+      class="object-cover object-center h-[80vh] w-7/12 hidden lg:block"
     />
     <div
-      class="bg-white flex flex-col justify-center items-center w-5/12 shadow-lg"
+      class="bg-white flex flex-col justify-center items-center w-full p-6 shadow-lg"
     >
       <h1 class="text-5xl font-bold text-yellow-500">LOGIN</h1>
       <div class="h-24 w-[100%] pt-4">

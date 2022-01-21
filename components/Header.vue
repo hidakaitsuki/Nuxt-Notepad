@@ -92,7 +92,7 @@
             v-if="loginFlag === false"
             ><img
               src="../static/loginlogo.jpg"
-              class="h-4 inline-block mr-[-8px] opacity-80"
+              class="h-4 inline-block mr-[-5px] lg:mr-[-8px] opacity-80"
               alt=""
             />
             ログイン</nuxt-link

@@ -5,15 +5,15 @@
         <!-- Row -->
         <div class="w-full h-[100%] flex">
           <!-- Col -->
-          <div class="w-[60%] h-auto bg-cover bg-registerimg"></div>
+          <div class="w-full lg:w-[60%] h-auto bg-cover hidden lg:block lg:bg-registerimg"></div>
           <!-- Col -->
-          <div class="w-[60%] bg-white p-36">
-            <h3 class="text-5xl font-bold text-center text-yellow-500 mb-8">
+          <div class="w-full lg:w-[60%] bg-white lg:p-36">
+            <h3 class=" mt-3 text-3xl lg:text-5xl font-bold text-center text-yellow-500 mb-3 lg:mb-8">
               Create an Account!
             </h3>
-            <div class="h-20">
+            <div class="h-10 lg:h-20">
               <p
-                class="text-center text-red-500"
+                class="text-sm lg:text-lg text-center text-red-500"
                 v-for="error of errorMessage"
                 :key="error"
               >
