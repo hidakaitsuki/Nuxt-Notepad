@@ -20,7 +20,7 @@
                 {{ error }}
               </p>
             </div>
-            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+            <form class="px-8 pt-6 pb-8 mb-6 bg-white rounded">
               <div class="mb-7 md:mr-2 md:mb-0">
                 <label
                   class="block mb-2 text-sm font-bold text-gray-700 w-10"
